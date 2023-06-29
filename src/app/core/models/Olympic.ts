@@ -10,10 +10,11 @@ example of an olympic country:
     participations: []
 }
 */
-export class OlymicCountry {
+export class OlympicCountry {
     constructor(
         public id: number,
         public country: string,
-        public participation: Participation[],
+        public participations: Participation[],
     ){}
+    
 }
