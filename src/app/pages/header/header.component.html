@@ -1,16 +1,17 @@
-<header></header>
+<header class="min-width"></header>
 
-    <nav class=" bd-subnavbar navbar navbar-expand-sm navbar-light bg-light ">
-        <a class="navbar-brand" style="margin-left: 15px;" href="https://olympics.com/" target="_blank"><img style="width: 50px;" src="../../../assets/pictures/logoOg.png" alt=""></a>
+    <nav class=" bd-subnavbar navbar navbar-expand-md navbar-light bg-light min-width ">
+        <a class="navbar-brand" href="https://olympics.com/" target="_blank"><img src="../../../assets/pictures/logoOg.png" alt=""></a>
 
-        <button class="navbar-toggler" style="margin-right: 15px;" type="button" data-bs-toggle="collapse" data-bs-target="#olympic" aria-controls="olympic" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#olympic" aria-controls="olympic" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="olympic">
             <ul class="navbar-nav">
-                <ng-container *ngFor="let post of olympics$ | async">
-                    <li class="nav-item"><a class="nav-link" href="#">{{post.country}}</a></li>
+                    <li class="nav-item"><a routerLink="" class="nav-link">Home</a></li>
+                <ng-container *ngFor="let olympic of olympicsheader$ | async">
+                    <li class="nav-item"><a routerLink="/country/{{ olympic.country }}" (click)="onClick" class="nav-link">{{olympic.country}}</a></li>
                 </ng-container>
             </ul>
         </div>

@@ -1,33 +1,34 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, of, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, of, take, takeUntil, tap } from 'rxjs';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
 import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
+import { ChartDataPoint, ChartDataSeriesOptions, ChartOptions, ChartToolTipOptions } from 'canvasjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   public olympics$: Observable<OlympicCountry[]> = of([]);
   private dataPoints: Array<{}> = [];
   public olympicCountry!: OlympicCountry; 
   public getScreenWidth: any;
   public getScreenHeight: any;
   private pieLabelPlacement: string = "";
-  private destroy$!: Subject<boolean>;
   
 
   constructor(private olympicService: OlympicService) {}
 
 
   ngOnInit() {
-    this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe(x=> this.getValuesForPie(x));
+    this.olympics$ = this.olympicService.getOlympics().pipe(take(2));
+    this.olympics$.subscribe((x)=> this.getValuesForPie(x));
     
     this.getScreenWidth = window.innerWidth;
     this.getScreenHeight = window.innerHeight;
+    this.onWindowResize();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -49,11 +50,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     dataPoints: this.dataPoints,
     }]
   }
-
   getValuesForPie(olympicCountry: OlympicCountry[]): void {
     for(let country of olympicCountry){
       const totalMedals = this.getTotalMedals(country.participations);
-      this.dataPoints.push({y: totalMedals, name: country.country, click: this.onClick});
+      this.dataPoints.push({y: totalMedals, name: country.country, click: (event: any) => { this.onClick(event) }});//click: (event: any) => { this.olympicService.getPageCountryUrl(event) }});
     }
     this.chartOptions.data[0].dataPoints = this.dataPoints;
   }
@@ -68,11 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onClick(e: any){
-    console.log(e);
-    console.log( "country : " + e.dataPoint.name)
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
+    const countryName = e.dataPoint.name
+    this.olympicService.getOlympicsByCountryName(countryName);
+    
   }
 }

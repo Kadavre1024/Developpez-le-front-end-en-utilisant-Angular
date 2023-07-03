@@ -1,24 +1,35 @@
-@import "~bootstrap/dist/css/bootstrap.css";
 
 header {
     background-color: #EEE;
     margin-bottom: 0px;
     background: url(../../../assets/pictures/LogoTelesport.PNG)no-repeat center/cover;
     height: 250px;
-  }
-  a {
-    margin: 0 10px;
-    color: #333;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  
-  .active {
-    color: #666;
+}
+
+a {
+  margin: 0 10px;
+  color: #333;
+  text-decoration: none;
+  &:hover {
     text-decoration: underline;
   }
+}
+
+.navbar-brand{
+  margin-left: 15px;
+  img{
+    width: 50px;
+  }
+}
+
+.active {
+  color: #666;
+  text-decoration: underline;
+}
+
+.navbar-toggler{
+  margin-right: 15px;
+}
 
 
   @media only screen and (max-width: 991px){

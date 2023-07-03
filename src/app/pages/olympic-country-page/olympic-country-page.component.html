@@ -1,0 +1,29 @@
+<div style="min-width: 390px; margin: 5px; ">
+    <div class="page-title">
+        <h1 style="text-align: center;">{{ countryName }}</h1>
+    </div>
+    <div>
+        <div class="info-container">
+            <div class="info">
+                <p>
+                    Number of entries<br>
+                    <span>{{ nbOfEntries }}</span>
+                </p>
+            </div>
+            <div class="info">
+                <p>
+                    Total number medals<br>
+                    <span>{{ nbTotalMedals }}</span>
+                </p>
+            </div>
+            <div class="info">
+                <p>
+                    Total number of athletes<br>
+                    <span>{{ nbTotalAthletes }}</span>
+                </p>
+            </div>
+        </div>
+    </div> 
+<div>
+    <canvasjs-chart [options]="chartOptions" (chartInstance)="getChartInstance($event)" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>    
+</div>       

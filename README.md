@@ -4,6 +4,29 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Don't forget to install your node_modules before starting (`npm install`).
 
+## Technologies
+
+- Angular
+- Typescript
+- CSS
+- HTML
+
+## Libraries
+
+### CanvasJS / Angular-Charts
+
+Chart components library for Angular.
+
+- Installation : npm install @canvasjs/angular-charts
+
+### Bootstrap 5.3
+
+Library for responsive elements.
+
+- Installation : npm install bootstrap --save
+                 npm install jquery --save
+                 npm install popper.js --save
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

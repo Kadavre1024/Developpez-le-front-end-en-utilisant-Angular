@@ -1,22 +1,24 @@
-<div style="min-width: 390px; margin-top: 20px;">
+<div class="min-width home-page" >
     <div class="page-title">
-        <h1 style="text-align: center;">Medals per Country</h1>
+        <h1>Medals per Country</h1>
     </div>
-    <div class="col40">
-        <div class="info-container">
-            <div class="info">
-                <h2>Number of JOs</h2>
-                <p>{{ (olympics$ | async)?.[0]?.participations?.length }}</p>
-                
-            </div>
-            <div class="info">
-                <h2>Number of countries</h2>
-                <p>{{ (olympics$ | async)?.length }}</p>
-            </div>
+    <div class="info-container">
+        <div class="info">
+            <p>
+                Number of JOs<br>
+                <span>{{ (olympics$ | async)?.[0]?.participations?.length }}</span>
+            </p>
+            
         </div>
-    </div>    
+        <div class="info">
+            <p>
+                Number of countries<br>
+                <span>{{ (olympics$ | async)?.length }}</span>
+            </p>
+        </div>
+    </div>
 
-    <div class="col60 float-right" *ngIf="chartOptions.data[0].dataPoints.length>0">
+    <div *ngIf="chartOptions.data[0].dataPoints.length>0">
         <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
     </div>
 </div>

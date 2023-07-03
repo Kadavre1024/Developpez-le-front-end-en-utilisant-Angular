@@ -7,13 +7,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { HeaderComponent } from './pages/header/header.component';
+import { OlympicCountryPageComponent } from './pages/olympic-country-page/olympic-country-page.component';
 
 @NgModule({
   declarations: [
     AppComponent, 
     HomeComponent,
     NotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    OlympicCountryPageComponent
   ],
   imports: [
     BrowserModule, 
