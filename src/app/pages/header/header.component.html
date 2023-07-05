@@ -7,11 +7,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="olympic">
+        <div class="collapse navbar-collapse"  id="olympic">
             <ul class="navbar-nav">
-                    <li class="nav-item"><a routerLink="" class="nav-link">Home</a></li>
-                <ng-container *ngFor="let olympic of olympicsheader$ | async">
-                    <li class="nav-item"><a routerLink="/country/{{ olympic.country }}" (click)="onClick" class="nav-link">{{olympic.country}}</a></li>
+                    <li class="nav-item"><a routerLink="" class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Home</a></li>
+                <ng-container *ngFor="let olympic of (olympicsheader$ | async)">
+                    <li class="nav-item"><a routerLink="/details/{{ olympic.country }}" (click)="onClick" class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">{{olympic.country}}</a></li>
                 </ng-container>
             </ul>
         </div>

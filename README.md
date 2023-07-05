@@ -21,11 +21,7 @@ Chart components library for Angular.
 
 ### Bootstrap 5.3
 
-Library for responsive elements.
-
-- Installation : npm install bootstrap --save
-                 npm install jquery --save
-                 npm install popper.js --save
+Library for responsive elements. Included via CDN in "index.html". No installation needed.
 
 ## Development server
 

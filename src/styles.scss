@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+:root{
+    --color1TitleBgInfoBrd: rgb(103, 197, 142);   //rgb(116, 221, 160)
+    --color1Shadows: rgb(128, 128, 128);
+    --color1FontTitle: rgb(243, 243, 243);
+}
+
 
 *{
     box-sizing: border-box;
@@ -11,10 +17,10 @@
     margin-bottom: 2.5%;
 }
 .info{
-    background-color: rgb(243, 243, 243); 
-    border: 2px solid rgb(116, 221, 160); 
+    background-color: var(--color1FontTitle); 
+    border: 2px solid var(--color1TitleBgInfoBrd); 
     border-radius: 20px; 
-    box-shadow: 1px 5px 5px rgb(128, 128, 128);
+    box-shadow: 1px 5px 5px var(--color1Shadows);
     text-align: center;
     vertical-align: middle;
     width: 50%;
@@ -25,21 +31,21 @@
     p{
         margin-bottom: 0;
         vertical-align: middle;
-        font-size: 16px;
+        font-size: 80%;
         font-weight:normal;
         font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         span{
-            font-size: 28px;
+            font-size: 200%;
             font-weight: bold;
         }
     }
 }
 .page-title{
-    background-color: rgb(116, 221, 160); 
-    border: 2px solid rgb(116, 221, 160); 
+    background-color: var(--color1TitleBgInfoBrd); 
+    border: 2px solid var(--color1TitleBgInfoBrd); 
     border-radius: 20px; 
-    box-shadow: 1px 10px 10px rgb(128, 128, 128);
-    color: azure;
+    box-shadow: 1px 10px 10px var(--color1Shadows);
+    color: var(--color1FontTitle);
     text-align: center;
     margin-left: auto;
     margin-right: auto;

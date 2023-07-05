@@ -1,41 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, OperatorFunction, filter, map, of, take, tap } from 'rxjs';
+import { OperatorFunction, filter, map, take } from 'rxjs';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
-import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts'; 
-import { Chart } from 'canvasjs';
+
 
 @Component({
   selector: 'app-olympic-country-page',
   templateUrl: './olympic-country-page.component.html',
   styleUrls: ['./olympic-country-page.component.scss']
 })
-export class OlympicCountryPageComponent {
-  public olympicCountry$:Observable<OlympicCountry> = of();
-  public olympicCountry!:OlympicCountry;
-  public countryName$!: Observable<string>;
-  public countryName!: string;
+export class OlympicCountryPageComponent implements OnInit {
+  public countryName: string = "";
+
+  public nbOfEntries: number = 0;
+  public nbTotalMedals: number = 0;
+  public nbTotalAthletes: number = 0;
+  public chart!: any;						// chart declared as any => it takes the chart component object type in the getChartInstance() method but at this time takes any type
 
   private dataPoint: Array<{x: Date, y: number}> = [];
-  public olympicCountryName!: string;
-  public nbOfEntries!: number;
-  public nbTotalMedals!: number;
-  public nbTotalAthletes!: number;
-  public chart!: any;
-
-  
-
 
 
   constructor(private router: Router, private route: ActivatedRoute, private olympicService: OlympicService) {
-    router.events.subscribe((val) => {				//on url change, update datas to show
+    router.events.subscribe((val) => {													// on url change, update datas to show
 		if (this.countryName !== this.route.snapshot.params['country']){
-			this.getUpatedDatas();
-			console.log("loaction1 : "+window.location.pathname)
+			this.updateDataPoints();
 		}
 	   });
 	}
+
+	ngOnInit(): void {}
+	
+	/* chart options for country line chart */
   
 	chartOptions = ({
 		animationEnabled: true,
@@ -70,11 +66,18 @@ export class OlympicCountryPageComponent {
 			type:"line",
 			name: "Medals",
 			showInLegend: true,
+			xValueFormatString: "YYYY",
 			yValueFormatString: "#,###",
 			dataPoints: this.dataPoint
 		}]
 
 	});
+
+	/* 
+		getCharInstance() => method used by the line chart component (in olympic-country-page.html)
+		to get the chart instance as an object and use the chart.render() method for updating datapoints.
+		(refer to : https://canvasjs.com/angular-charts/dynamic-live-line-chart/)
+	*/
 	getChartInstance(chart: object){
 		this.chart = chart;
 	}
@@ -86,19 +89,23 @@ export class OlympicCountryPageComponent {
 		this.dataPoint = [];
 
 		this.nbOfEntries = olympicCountry.participations.length;
+		[this.nbTotalMedals, this.nbTotalAthletes] = this.olympicService.getTotalItemsOfParticipation(olympicCountry.participations);
+
 		for(let participation of  olympicCountry.participations){
-		this.dataPoint.push({x: new Date(participation.year, 0, 1), y: participation.medalsCount});
-		this.nbTotalAthletes += participation.athleteCount;
-		this.nbTotalMedals += participation.medalsCount;
+			this.dataPoint.push({x: new Date(participation.year, 0, 1), y: participation.medalsCount});
 		}
 		this.chartOptions.data[0].dataPoints = this.dataPoint;
 		if (this.chart){
 			this.chart.render();
 		}
 	}
-	getUpatedDatas(){
+
+	updateDataPoints(){
 		this.countryName = this.route.snapshot.params['country'];
-		this.olympicCountry$ = this.olympicService.getOlympicsByCountryName(this.countryName);
-		this.olympicCountry$.pipe(take(2),filter(x => x !== undefined) as OperatorFunction<OlympicCountry | undefined, OlympicCountry>).subscribe((x) => this.getValuesForGraph(x));
+		this.olympicService.getOlympics().pipe(
+			take(2),
+			map(values => values.filter(value => value.country === this.countryName)[0]),
+			filter(x => x !== undefined) as OperatorFunction<OlympicCountry | undefined, OlympicCountry>,			// Filtering to get only datas as an OlympicCrountry object
+			).subscribe((x) => this.getValuesForGraph(x));
 	}
 }
